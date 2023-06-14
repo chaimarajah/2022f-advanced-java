@@ -4,6 +4,7 @@ import fr.epita.advjava.datamodel.Country;
 import fr.epita.advjava.services.GenericDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -19,8 +20,11 @@ public abstract class AbstractJPADAO<T> implements GenericDAO<T> {
 
     @Override
     public void create(T instance) {
+
         Session session = sf.openSession();
+        Transaction transaction = session.beginTransaction();
         session.persist(instance);
+        transaction.commit();
     }
 
     @Override

@@ -1,4 +1,6 @@
+import fr.epita.advjava.services.CountryDAO;
 import fr.epita.advjava.services.UserDAO;
+import fr.epita.advjava.services.impl.jpa.CountryJPADAO;
 import fr.epita.advjava.services.impl.jpa.UserJPADAO;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +38,9 @@ public class SpringApplicationContext {
     @Bean
     public UserDAO getUserDAO(SessionFactory sf) {
         return new UserJPADAO(sf);
+    }
+    @Bean
+    public CountryDAO getCountryDAO(SessionFactory sf) {
+        return new CountryJPADAO(sf);
     }
 }

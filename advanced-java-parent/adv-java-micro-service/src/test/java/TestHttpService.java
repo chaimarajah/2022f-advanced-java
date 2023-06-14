@@ -35,8 +35,13 @@ public class TestHttpService {
                 //some business logic
                 Country country = new Country(countryDTO.getCode(), countryDTO.getDisplayName());
                 countryDAO.create(country);
-
+                httpRequest.sendResponseHeaders(201, "created".length());
+                httpRequest.getResponseBody().write(country.getShortCode().getBytes());
+                httpRequest.getResponseBody().close();
+                httpRequest.close();
+                return;
             }
+            //get for the next time
             byte[] requestBytes = httpRequest.getRequestBody().readAllBytes();
             System.out.println( new String(requestBytes));
 
