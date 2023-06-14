@@ -3,9 +3,10 @@ package fr.epita.advjava.datamodel;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class Country {
+public class Country implements Serializable {
 
     @Id
     String shortCode;
