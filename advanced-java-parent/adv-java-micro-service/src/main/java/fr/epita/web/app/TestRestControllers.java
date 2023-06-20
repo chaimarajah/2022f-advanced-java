@@ -8,10 +8,7 @@ import fr.epita.web.resources.CountryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -27,16 +24,28 @@ public class TestRestControllers {
         return ResponseEntity.ok("test sucessful");
     }
 
-    @PostMapping(value = "/countries",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
+//    @PostMapping(value = "/countries",
+//            consumes = MediaType.APPLICATION_JSON_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE
+//    )
+//    public ResponseEntity<String> firstPostMethod(@RequestBody CountryDTO dto){
+//        Country country = new Country(dto.getCode(), dto.getDisplayName());
+//        dao.create(country);
+//        return ResponseEntity
+//                .created(URI.create("/countries/" + country.getShortCode()))
+//                .body("created the country sucessfully");
+//    }
+
+
+    @GetMapping(value = "/countries/{code}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> firstPostMethod(@RequestBody CountryDTO dto){
-        Country country = new Country(dto.getCode(), dto.getDisplayName());
-        dao.create(country);
-        return ResponseEntity
-                .created(URI.create("/countries/" + country.getShortCode()))
-                .body("created the country sucessfully");
+    public ResponseEntity<CountryDTO> getCountryByCode(@PathVariable("code") String code){
+        Country predicate = new Country(code, "");
+        Country foundCountry = dao.getById(predicate);
+        CountryDTO countryDTO = new CountryDTO();
+        countryDTO.setCode(foundCountry.getShortCode());
+        countryDTO.setDisplayName(foundCountry.getDisplayName());
+        return ResponseEntity.ok().body(countryDTO);
     }
-
 }

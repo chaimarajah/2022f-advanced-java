@@ -4,6 +4,7 @@ import fr.epita.advjava.datamodel.Country;
 import fr.epita.advjava.services.CountryDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -18,8 +19,11 @@ public class CountryJPADAO implements CountryDAO {
 
     @Override
     public void create(Country country) {
+
         Session session = sf.openSession();
+        Transaction transaction = session.beginTransaction();
         session.persist(country);
+        transaction.commit();
     }
 
     @Override
@@ -42,7 +46,8 @@ public class CountryJPADAO implements CountryDAO {
 
     public Country getById(Country country){
         Session session = sf.openSession();
-        return session.get(Country.class, country);
+        Country foundCountry = session.get(Country.class, country.getShortCode());
+        return foundCountry;
     }
 
 
