@@ -22,7 +22,6 @@ public class TestRestControllers {
     @Autowired
     CountryDAO dao;
 
-
     @GetMapping(path = "/someContent")
     public ResponseEntity<String> firstGetMethod(){
         return ResponseEntity.ok("test sucessful");
