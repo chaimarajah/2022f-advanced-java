@@ -1,4 +1,7 @@
+import com.sun.net.httpserver.HttpServer;
 import fr.epita.advjava.UsersDAO;
+import fr.epita.advjava.datamodel.Country;
+import fr.epita.advjava.services.CountryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,6 +9,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
+import java.net.InetSocketAddress;
+import java.net.URI;
 import java.util.Properties;
 
 @Configuration
@@ -29,6 +34,8 @@ public class SpringApplicationContext {
     }
 
 
+
+
     @Bean
     public LocalSessionFactoryBean sessionFactoryBean(DataSource ds){
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
@@ -42,6 +49,9 @@ public class SpringApplicationContext {
         localSessionFactoryBean.setHibernateProperties(properties);
         return localSessionFactoryBean;
     }
+
+
+
 
 
 
