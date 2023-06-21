@@ -20,11 +20,8 @@ public abstract class AbstractJPADAO<T> implements GenericDAO<T> {
 
     @Override
     public void create(T instance) {
-
         Session session = sf.openSession();
-        Transaction transaction = session.beginTransaction();
         session.persist(instance);
-        transaction.commit();
     }
 
     @Override

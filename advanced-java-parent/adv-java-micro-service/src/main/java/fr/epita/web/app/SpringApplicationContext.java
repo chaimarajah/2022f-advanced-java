@@ -7,6 +7,7 @@ import fr.epita.advjava.services.CountryDAO;
 import fr.epita.advjava.services.UserDAO;
 import fr.epita.advjava.services.impl.jpa.CountryJPADAO;
 import fr.epita.advjava.services.impl.jpa.UserJPADAO;
+import fr.epita.web.dataservices.UsersDetailsDataService;
 import fr.epita.web.resources.CountryDTO;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -87,5 +88,10 @@ public class SpringApplicationContext {
 
         });
         return server;
+    }
+
+    @Bean
+    public UsersDetailsDataService usersDetailsDataService(CountryDAO dao, SessionFactory sf){
+        return new UsersDetailsDataService(sf, dao);
     }
 }
