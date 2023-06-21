@@ -29,4 +29,24 @@ public class Address {
     @JoinColumn(name = "ref_country")
     Country country;
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
 }
