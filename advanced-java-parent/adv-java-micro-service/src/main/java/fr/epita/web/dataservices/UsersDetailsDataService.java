@@ -6,6 +6,7 @@ import fr.epita.advjava.services.AddressDAO;
 import fr.epita.advjava.services.CountryDAO;
 import fr.epita.web.resources.AddressDTO;
 import fr.epita.web.resources.CountryDTO;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
@@ -50,12 +51,11 @@ public class UsersDetailsDataService {
     }
 
 
-    @Transactional
     public AddressDTO createAddress(AddressDTO addressDTO) {
-
         CountryDTO countryDTO = addressDTO.getCountry();
         Country receivedCountry = new Country(countryDTO.getCode(), countryDTO.getDisplayName());
-        Transaction transaction = sf.openSession().beginTransaction();
+        Session session = sf.openSession();
+        Transaction transaction = session.beginTransaction();
         Country country = dao.getById(receivedCountry);
         if (country == null) {
             country = getCountryFromDTO(countryDTO);
@@ -65,7 +65,7 @@ public class UsersDetailsDataService {
         //do a search to validate the address exists or not
         addressDAO.create(address);
         transaction.commit();
-
+        session.close();
         addressDTO.setId(address.getId());
 
         return addressDTO;

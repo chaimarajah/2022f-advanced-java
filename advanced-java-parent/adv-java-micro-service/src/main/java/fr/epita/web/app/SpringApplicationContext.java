@@ -3,11 +3,14 @@ package fr.epita.web.app;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
 import fr.epita.advjava.datamodel.Country;
+import fr.epita.advjava.services.AddressDAO;
 import fr.epita.advjava.services.CountryDAO;
 import fr.epita.advjava.services.UserDAO;
+import fr.epita.advjava.services.impl.jpa.AddressJPADAO;
 import fr.epita.advjava.services.impl.jpa.CountryJPADAO;
 import fr.epita.advjava.services.impl.jpa.UserJPADAO;
 import fr.epita.web.dataservices.UsersDetailsDataService;
+import fr.epita.web.resources.AddressDTO;
 import fr.epita.web.resources.CountryDTO;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,6 +56,10 @@ public class SpringApplicationContext {
     public CountryDAO getCountryDAO(SessionFactory sf) {
         return new CountryJPADAO(sf);
     }
+    @Bean("dao.jpa.addressDAO")
+    public AddressDAO getAddressDAO(SessionFactory sf) {
+        return new AddressJPADAO(sf);
+    }
 
 
     @Bean
@@ -91,7 +98,7 @@ public class SpringApplicationContext {
     }
 
     @Bean
-    public UsersDetailsDataService usersDetailsDataService(CountryDAO dao, SessionFactory sf){
-        return new UsersDetailsDataService(sf, dao);
+    public UsersDetailsDataService usersDetailsDataService(CountryDAO dao, AddressDAO addressDAO, SessionFactory sf){
+        return new UsersDetailsDataService(sf, dao, addressDAO);
     }
 }
